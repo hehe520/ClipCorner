@@ -238,7 +238,8 @@ static CGFloat radius = 100;             // 圆角大小，单位是像素点
     CGDataProviderRef pv = CGDataProviderCreateWithData(NULL, imgData, width * height * 4, releaseData);
     CGImageRef content = CGImageCreate(width , height, 8, 32, 4 * width, CGColorSpaceCreateDeviceRGB(), kCGBitmapByteOrder32Big | kCGImageAlphaPremultipliedLast, pv, NULL, true, kCGRenderingIntentDefault);
     UIImage *result = [UIImage imageWithCGImage:content];
-    free(imgData);      // 释放空间
+    CGDataProviderRelease(pv);      // 释放空间
+    CGImageRelease(content);
     
     return result;
 }
